@@ -6,7 +6,7 @@ int main(void)
     int cents;
     do
     {
-        cents = get_int("Enter your change: ");
+         cents = get_int("Enter your change: ");
     }
     while (cents <= 0);
 
@@ -33,5 +33,5 @@ int main(void)
             coins++;
         }
 
-        printf("You will need at least %i", coins);
+        printf("You will need at least %i coins\n", coins);
 }
