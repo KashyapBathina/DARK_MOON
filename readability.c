@@ -50,7 +50,7 @@ int main(void)
     float S = ((float)Sentences / (float)Words) * 100;
     float subindex = 0.0588 * L - 0.296 * S - 15.8;
     int index = round(subindex);
-    if (index >= 16)
+    if (index > 16)
     {
         printf("Grade 16+\n");
     }
