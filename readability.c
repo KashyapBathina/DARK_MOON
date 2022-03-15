@@ -22,7 +22,7 @@ int main(void)
 
 
     // words
-    int Words = 0;
+    int Words = 1;
     for (int i = 0; i < strlen(text); i++)
     {
         if (text[i] == ' ')
@@ -30,7 +30,7 @@ int main(void)
             Words++;
         }
     }
-    Words = Words + 1;
+
 
 
     // sentences
@@ -46,18 +46,18 @@ int main(void)
     // calculations
     float L = ((float)Letters / (float)Words) * 100;
     float S = ((float)Sentences / (float)Words) * 100;
-    int gradelevel = 0.0588 * L - 0.296 * S - 15.8;
-    if (gradelevel > 16)
+    int index = 0.0588 * L - 0.296 * S - 15.8;
+    if (index >= 16)
     {
         printf("Grade 16+\n");
     }
-    if (gradelevel < 1)
+    else if (index < 1)
     {
         printf("Before Grade 1\n");
     }
     else
     {
-        printf("Grade %i\n", gradelevel);
+        printf("Grade %i\n", index);
     }
 
 }
