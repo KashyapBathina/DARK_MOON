@@ -46,9 +46,7 @@ int main(void)
 
 
     // calculations
-    float L = ((float)Letters / (float)Words) * 100;
-    float S = ((float)Sentences / (float)Words) * 100;
-    float subindex = 0.0588 * L - 0.296 * S - 15.8;
+    float subindex = (0.0588 * Letters / Words * 100) - (0.296 * Sentences / Words * 100) - 15.8;
     int index = round(subindex);
     if (index > 16)
     {
