@@ -63,6 +63,7 @@ bool load(const char *dictionary)
 {
     // TODO
     FILE *file = fopen(dictionary, "r");
+
     if (file == NULL)
     {
         printf("Unable to open %s\n", dictionary);
@@ -108,20 +109,19 @@ unsigned int size(void)
 // Unloads dictionary from memory, returning true if successful, else false
 bool unload(void)
 {
-    // TODO
-    for (int i = 0; i < N; i++)
+    for (int i = 0; i < N ; i ++)
     {
-        node *cursor = table[i];
-        while (cursor)
+        node *head = table[i];
+        node *cursor = head;
+        node *tmp = head;
+
+        while (cursor != NULL)
         {
-            node *tmp = cursor;
-            cursor = cursor->next;
+            cursor = cursor -> next;
             free(tmp);
+            tmp = cursor;
         }
-        if (cursor == NULL)
-        {
-            return true;
-        }
+
     }
-    return false;
+    return true;
 }
