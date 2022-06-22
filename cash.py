@@ -4,10 +4,11 @@ from cs50 import get_float
 count = 0
 
 while True:
-    owed = get_float("How much change is owed: ")
-    if owed > 0:
+    cents = get_float("How much change is owed: ")
+    if cents > 0:
         break
-    cents = round(owed * 100)
+
+owed = round(cents * 100)
 
 while owed >= 25:
     owed = owed - 25
