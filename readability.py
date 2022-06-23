@@ -21,7 +21,7 @@ calculation = 0.0588 * (letters / words * 100) - 0.296 * (sentences / words * 10
 level = round(calculation)
 
 if level < 1:
-    print("Below Grade 1")
+    print("Before Grade 1")
 elif level > 16:
     print("Grade 16+")
 else:
