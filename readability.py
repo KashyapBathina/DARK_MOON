@@ -12,11 +12,16 @@ for i in range(len(text)):
         letters += 1
 
     if (text[i].isspace()):
-        words +=1
+        words += 1
 
     if (text[i] == "." or text[i] == "!" or text[i] == "?"):
         sentences += 1
 
 level = 0.0588 * (letters / words * 100) - 0.296 * (sentences / words * 100) - 15.8
 
-print(f"Grade {round(level)}")
+if level > 1:
+    print("Below Grade 1")
+elif level < 12:
+    print("Grade 16+")
+else:
+    print(f"Grade {round(level)}")
