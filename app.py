@@ -71,7 +71,7 @@ def buy():
             return apology("must provide stock symbol and number of shares", 403)
 
         if int(request.form.get("shares")) <= 0:
-            return apology("must provide valid number of shares", 403)
+            return apology("must provide valid number of shares", 400)
 
         quote = lookup(request.form.get("symbol"))
 
@@ -169,7 +169,7 @@ def quote():
     if request.method == "POST":
         quote = lookup(request.form.get("symbol"))
         if not quote:
-            return apology("Either the stock does not exist or you have provided the incorrect symbol", 403)
+            return apology("Either the stock does not exist or you have provided the incorrect symbol", 400)
 
         return render_template("quoted.html", name = quote["name"], price = usd(quote["price"]), symbol = quote["symbol"])
 
@@ -195,7 +195,7 @@ def register():
             return apology("passwords must match", 400)
 
         if len(db.execute('SELECT username FROM users WHERE username = ?', username)) > 0:
-            return apology("username already in use", 403)
+            return apology("username already in use", 400)
 
         result = db.execute("INSERT INTO users (username, hash) VALUES(?, ?)", username, generate_password_hash(password))
 
@@ -221,7 +221,7 @@ def sell():
             return apology("you must fill in all fields", 403)
 
         if owns[request.form.get("symbol")] < int(request.form.get("shares")):
-            return apology("you cannot sell more shares than you own", 403)
+            return apology("you cannot sell more shares than you own", 400)
 
         result = lookup(request.form.get("symbol"))
         cash = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])[0]['cash']
