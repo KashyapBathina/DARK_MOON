@@ -73,7 +73,9 @@ def buy():
         if int(request.form.get("shares")) <= 0:
             return apology("must provide valid number of shares", 400)
 
-        if isinstance((request.form.get("shares")), float):
+        shares = request.form.get("shares")
+
+        if not shares.isdigit()::
             return apology("must provide valid number of shares", 400)
 
         quote = lookup(request.form.get("symbol"))
