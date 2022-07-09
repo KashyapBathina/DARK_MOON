@@ -194,10 +194,11 @@ def register():
         elif password != confirmation:
             return apology("passwords must match", 400)
 
-        result = db.execute("INSERT INTO users (username, hash) VALUES(?, ?)", username, generate_password_hash(password))
-
         if len(db.execute('SELECT username FROM users WHERE username = ?', username)) > 0:
             return apology("username already in use", 403)
+
+        result = db.execute("INSERT INTO users (username, hash) VALUES(?, ?)", username, generate_password_hash(password))
+
 
         session["user_id"] = result
 
