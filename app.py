@@ -73,7 +73,10 @@ def buy():
         if int(request.form.get("shares")) <= 0:
             return apology("must provide valid number of shares", 400)
 
-        shares = request.form.get("shares")
+        try:
+            shares = int(request.form.get("shares"))
+        except ValueError:
+            return apology("shares must be a positive integer", 400)
 
         if not shares.isdigit():
             return apology("must provide valid number of shares", 400)
