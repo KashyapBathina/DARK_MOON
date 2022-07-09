@@ -75,7 +75,7 @@ def buy():
 
         shares = request.form.get("shares")
 
-        if not shares.isdigit()::
+        if not shares.isdigit():
             return apology("must provide valid number of shares", 400)
 
         quote = lookup(request.form.get("symbol"))
