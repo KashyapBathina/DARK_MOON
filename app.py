@@ -33,7 +33,6 @@ if not os.environ.get("API_KEY"):
     raise RuntimeError("API_KEY not set")
 
 
-
 @app.after_request
 def after_request(response):
     """Ensure responses aren't cached"""
@@ -41,7 +40,6 @@ def after_request(response):
     response.headers["Expires"] = 0
     response.headers["Pragma"] = "no-cache"
     return response
-
 
 
 @app.route("/")
@@ -58,7 +56,7 @@ def index():
         total += stock_value
         owns[symbol] = (name, shares, usd(price), usd(stock_value))
     cash = db.execute("SELECT cash FROM users WHERE id = ? ", session["user_id"])[0]['cash']
-    return render_template("index.html", owns=owns, cash= usd(cash), total = usd(total))
+    return render_template("index.html", owns=owns, cash=usd(cash), total=usd(total))
 
 
 @app.route("/buy", methods=["GET", "POST"])
@@ -90,17 +88,15 @@ def buy():
         if cost > cash_available[0]["cash"]:
             return apology("you do not have enough cash for this stock")
 
-        db.execute("UPDATE users SET cash = cash - ? WHERE id = ?", cost, session["user_id"]);
+        db.execute("UPDATE users SET cash = cash - ? WHERE id = ?", cost, session["user_id"])
 
         db.execute("INSERT INTO orders (user_id, symbol, shares, price, timestamp) VALUES (?, ?, ?, ?, ?)",
-        session["user_id"], quote["symbol"], int(request.form.get("shares")), quote["price"], time_now())
+                   session["user_id"], quote["symbol"], int(request.form.get("shares")), quote["price"], time_now())
 
         return redirect("/")
 
     else:
         return render_template("buy.html")
-
-
 
 
 @app.route("/history")
@@ -113,8 +109,7 @@ def history():
     if not rows:
         return apology("You have no transactions recorded")
 
-    return render_template("history.html", rows = rows)
-
+    return render_template("history.html", rows=rows)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -153,7 +148,6 @@ def login():
         return render_template("login.html")
 
 
-
 @app.route("/logout")
 def logout():
     """Log user out"""
@@ -163,7 +157,6 @@ def logout():
 
     # Redirect user to login form
     return redirect("/")
-
 
 
 @app.route("/quote", methods=["GET", "POST"])
@@ -176,11 +169,10 @@ def quote():
         if not quote:
             return apology("Either the stock does not exist or you have provided the incorrect symbol", 400)
 
-        return render_template("quoted.html", name = quote["name"], price = usd(quote["price"]), symbol = quote["symbol"])
+        return render_template("quoted.html", name=quote["name"], price=usd(quote["price"]), symbol=quote["symbol"])
 
     else:
         return render_template("quote.html")
-
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -191,7 +183,6 @@ def register():
         username = request.form.get("username")
         password = request.form.get("password")
         confirmation = request.form.get("confirmation")
-
 
         if not username or not password or not confirmation:
             return apology("must fill in all fields", 400)
@@ -204,14 +195,12 @@ def register():
 
         result = db.execute("INSERT INTO users (username, hash) VALUES(?, ?)", username, generate_password_hash(password))
 
-
         session["user_id"] = result
 
         return redirect("/")
 
     else:
         return render_template("register.html")
-
 
 
 @app.route("/sell", methods=["GET", "POST"])
@@ -234,14 +223,13 @@ def sell():
         remain = cash + result["price"] * int(request.form.get("shares"))
 
         db.execute("UPDATE users SET cash = ? WHERE id = ?", remain, session["user_id"])
-        db.execute("INSERT INTO orders (user_id, symbol, shares, price, timestamp) VALUES (?, ?, ?, ?, ?)", \
-        session["user_id"], request.form.get("symbol"), -int(request.form.get("shares")), result["price"], time_now())
+        db.execute("INSERT INTO orders (user_id, symbol, shares, price, timestamp) VALUES (?, ?, ?, ?, ?)",
+                   session["user_id"], request.form.get("symbol"), -int(request.form.get("shares")), result["price"], time_now())
 
         return redirect("/")
 
     else:
-        return render_template("sell.html", owns = owns.keys())
-
+        return render_template("sell.html", owns=owns.keys())
 
 
 @app.route("/add_cash", methods=["GET", "POST"])
@@ -258,7 +246,7 @@ def add_cash():
         if int(request.form.get("money")) > int(999):
             return apology("your card declined", 403)
 
-        db.execute("UPDATE users SET cash = cash + ? WHERE id = ?", request.form.get("money"), session["user_id"]);
+        db.execute("UPDATE users SET cash = cash + ? WHERE id = ?", request.form.get("money"), session["user_id"])
 
         return redirect("/")
 
@@ -266,11 +254,11 @@ def add_cash():
         return render_template("add_cash.html")
 
 
-
 def time_now():
-    ## Get current time
+    # Get current time
     now_utc = datetime.now(timezone.utc)
     return str(now_utc.date()) + ' @time ' + now_utc.time().strftime("%H:%M:%S")
+
 
 def own_shares():
     owns = {}
