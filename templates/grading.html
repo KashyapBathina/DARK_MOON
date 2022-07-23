@@ -1,0 +1,125 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Grading
+{% endblock %}
+
+{% block main %}
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+    <!-- Header -->
+    <header class="w3-container" style="padding-top:22px; text-align: left;">
+      <h5><b><i class="fa fa-dashboard"></i> Grading </b></h5>
+    </header>
+    <!---->
+
+        <div class="w3-quarter" style="padding-top:20px"></div>
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingOne">
+                <a class="accordion-button collapsed" style="text-decoration: none;">
+                      <h4 style="padding-right:500px">New Assignment</h4>
+                      <div>
+                        <form action="/grading" method="post" id="todo-form">
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Assignment Name</label>
+                            <input name="aname" type="text" class="form-control" id="exampleFormControlInput1" placeholder="assignment name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Class Name</label>
+                            <select name="classesl" id="classesl" class="form-select form-control form-label" aria-label="Default select">
+                              <option name = "none" id="none" value ="none"> --select class--</option>
+                              {% for class in classes %}
+                              <option name = "cname" value=" {{class["classname"]}} "> {{class["classname"]}} </option>
+                              {% endfor %}
+                          </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Weight</label>
+                            <input name="weight" type="number" class="form-control" id="exampleFormControlInput1" placeholder="weight">
+                        </div>
+                        <div class="mb-3">
+                            <button name="form" id="form" type="submit" class="btn btn-primary mb-3" style="margin-right:10px" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">Add Assignment</button>
+                        </div>
+                        </form>
+                    </div>
+                </a>
+              </h2>
+          </div>
+        </div>
+</div>
+<hr>
+{% endblock %}
+
+
+
+
+
+<!--
+<script src="https://code.jquery.com/jquery-3.5.1.js"
+    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous">
+</script>
+
+<script type="text/javascript">
+  function getData(){
+    console.log('hello');
+    $.ajax({
+      type:'POST',
+      url:'/grading',
+      data:{
+        classesl:$("#classesl").val()
+      },
+    })
+  };
+
+function reload(){
+    var container = document.getElementById("yourDiv");
+    var content = container.innerHTML;
+    container.innerHTML= content;
+}
+</script>
+-->
+
+
+
+
+
+
+
+<!--
+    <div class="w3-row-padding w3-margin-bottom">
+      <input autocomplete="off" autofocus placeholder="Query" type="search">
+
+
+          <div class="card card-body">
+            <form action="/grading" method="post">
+                <div class="w3-panel">
+                    <div class="w3-row-padding" style="margin:0 -16px">
+                      <h5>Are the right students not showing up?  Maybe you typed the wrong class name.</h5>
+                      <div class="w3">
+                        <table class="w3-table w3-striped w3-white">
+                            <td><i class="fa fa-user w3-text-blue w3-large"></i></td>
+                            <td id="uno"></td>
+                            <td id="dos"></td>
+                            <td id="tres"></td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                <div class="mb-3">
+                    <button type="button" class="btn btn-primary mb-3" style="margin-right:10px">Add Student</button>
+                </div>
+            </form>
+        </div>
+
+
+
+
+
+
+
+
+
+        -->

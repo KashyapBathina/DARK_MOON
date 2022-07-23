@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- http://getbootstrap.com/docs/5.1/-->
+        <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"></script>
+
+        <link href="/static/favicon.ico" rel="icon" height="50" width="50">
+        <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" rel="stylesheet">
+        <link href="/static/styles.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+        html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+        </style>
+
+        <title>Dark Moon: {% block title %}{% endblock %}</title>
+    </head>
+
+    <body class="w3-light-grey">
+
+        {% if session["user_id"] and session["type"] == "teacher" %}
+            <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+                <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i> Menu</button>
+                <span class="w3-bar-item w3-left">DarkMoon</span>
+                <span class="w3-bar-item w3-left"><img src="https://www.pngall.com/wp-content/uploads/5/Crescent-Moon-PNG-Picture.png" class="img-fluid" alt="darkmoon" height="30" width="30"></span>
+                <span class="w3-bar-item w3-right medium"><a href="/login">Logout</a></span>
+            </div>
+
+            <!-- Sidebar/menu -->
+            <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;padding-top:50px; " id="mySidebar"><br>
+                <div class="w3-container w3-row">
+                <div class="w3-col s4">
+                    <img src="https://www.w3schools.com/w3images/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">
+                </div>
+                <div class="w3-col s8 w3-bar">
+                    <span>Welcome, <strong>{{session["name"]}}</strong></span><br>
+                    <a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
+                    <a href="#" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
+                    <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
+                </div>
+                </div>
+                <hr>
+                <div class="w3-container">
+                <h5>Dashboard</h5>
+                </div>
+                <div class="w3-bar-block">
+                <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
+                <a href="/" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>  Homepage</a>
+                <a href="/index" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Overview</a>
+                <a href="/gradebook" class="w3-bar-item w3-button w3-padding"><i class="fa fa-diamond fa-fw"></i>  Gradebook</a>
+                <a href="/grading" class="w3-bar-item w3-button w3-padding"><i class="fa fa-share-alt fa-fw"></i>  Grading</a>
+                <a href="/classes" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bullseye fa-fw"></i>  Classes</a>
+                <a href="/students" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Students</a>
+                <a href="/unfinished" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bell fa-fw"></i>  Reporting</a>
+                <a href="/unfinished" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Settings</a><br><br>
+                </div>
+            </nav>
+          <!-- Overlay effect when opening sidebar on small screens -->
+          <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+        {% elif session["user_id"]%}
+            <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+                <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
+                <span class="w3-bar-item w3-left">DarkMoon</span>
+                <span class="w3-bar-item w3-left" style="right:10px"><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxMTEhUSExIVFhUSFRUXFRIVFRUVFRUXFxcXFxUVFRUYHSggGBolGxUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKBQUFDgUFDisZExkrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIAOEA4QMBIgACEQEDEQH/xAAcAAEAAwADAQEAAAAAAAAAAAAAAQIDBgcIBAX/xABDEAACAQIDBQUEBQkHBQAAAAAAAQIDEQQhQQUSMVFxBgcTImEyQoGRCHKCobEUIzNSkqLB0fAkQ2JjssLxFVODk6P/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A6QhC5ac9EU33axUAAAAJaIAvKpcoAAALQa1AvGNs2UlK4nK5UAAABpBpZ6mYAmUrkAACYxuEaN2y1AiWXUzAAAAC0Y3LynbJGQAAAAAAAAAF40xCGuglLTQCZz0XAzAAAGsI2zYGQJk7kAACUgINUrLMR8vHUzlK4EAAACUrlqkUgKAAAAWivkAgriasXlK2SMgAAAAtGF1cqAAAAvTjryKADSc9EZgAAgaxhbiBEY2z+4rOVxOVyoAAASkaRVszNMSdwEncgH0YbBVan6OnOdv1Iyl+CA+clK5972HiVxw1dLm6VT+R81ROHlaakuKas11TAq5JLIyJbIAAAC0I3LzlbJEeJkZgAAALwiIQ5ipLkAnPkUAAAACWQAAALuGVwKEtkAAASgCRMoNF1FLM7b7t+56eIUcTtBSp0Wk4YdXjUqLRzfGnH09p+modc9muyuLx89zC0JTs/NP2acPrTeS6cXomdw9mu4alFKWOxEpy4ulR8sOjqSW9JdFE7g2fgaVCnGlRpxp04K0YQSjFfBH0MDjux+w2zsMl4ODoprhOUFUn+3UvL7z9rFYqlRg51JwpQjxlOUYQS9W7JHVneB3zU8O5UMAo1qqylXedCD1UbP8AOS/d65o6K25t/E4yfiYmvOrLTeflj9WC8sV6JID0ftjvi2VQbUa068lpRptr4TnuxfVNnFdqd9+Aqpwls6daL4qt4Vn1i1JHQ4A7D2xt/YWJu3s7EYWT9/DVIW/9UrQt0S6nB9pUaMZfmasqkHwc6fhzXpKKcl8pP4HyFowuBBBrKVlYyAAAAWha+ZUAXnPRFAAABpCOrAzBfL1AFAEaxjbNgRGKtcrOVyJSuQAAAEmiilxIg0lfU533QdjP+o4zfqxvhsNadVPhN38lLo2m36J80BzPuX7tE1DaOMhe9pYajJZW4xrTWvOK+PI7xIStktNCQB5+74u8yVeU8Bg52oxbjXrRf6Z604Nf3ejfvfV9rmffj2yeEwywlGVq+KTvJOzp0eEpejl7K+1qkebnlw46gS3u9TIAAAWjG4CMblpStkv+CZytkjIAAABeEdRCD48hOYETa0KgAADSEdeQEQWonO4nO5QAAAL02tSJyuVAAAAAabqSzMwB647suzSwGz6VFq1Sa8Ss9XUmk2n9VbsfsnnHuu2P+VbUwtJq8VU8SeV1u0k6ln6NxUftHrkARJ2JOO94e0Xh9m4uqnZxoTUXylNbkX85IDzH2+7RPG46viL3jKbjS5KlDyw6XS3usmcaAAAFoq4FSUyZqzKgAAANIQ5mZbeysBM56FAAABZxYFS0ptlQAAAAAAACUgINY5cf69CYqyvzMpSuAlK5AAHb30bsCpYzE1v+1QUF1qTTv1tTfzZ6EbOj/o0Qyx0tX+Tr5eL/ADO7wJTOBd+c7bGxC/WlQX/2g/4HPkcJ758K6mx8Ulxiqc/hCrCUvuTA8pAFoRuBEUaSlbJCbtkjIAAABZQdrloQ1InLRAUAAAA0hDVgI09WROdyJS+RUAASkBANYq2Zm2BAAAExdhKNiAJlK5AAAmKuQXjOyA7p+jbVSq42nrKFCX7Mqif+tHe55g7iNqeDtaEW8sTTqUm9L2VSPzdNL7R6fAHw7c2esRh62HlwrUqlN+m/Fxv959wA8QYmhKnOVOatKEnGUXxUouzT+KDnlkdk9/HZZ4bHflUI2pYy87pZRrL9In9bKfq5S5HWQAAAC8IcyIJXzJnO4CcuRQAAAANKaXHkfXsrATxNelh6a81WcYR9L5OT9Ert+iPgO0u5/Y3hUcZterHyYShWjQv71Xw3vOPRNR/8noB1aAAJSL7tlfXkSlbiZylcBKVyAAAAAmTuQAAJsTGNy7dkBkAAPq2ZjpUK1OvD26NSFSPWElJfgezNjbShiaFLEU3eFaEZx6SV7P1XB9DxSd6/R67W+WWzass05VMPd8U86tNdHea6z5Ad2tkJBIsB+H2z7NUtoYSphquW9nTna7p1Ffcmvm0+abWp5I29satg688PXhu1Kbs1o1pKL1i1mme0ziHeL2CobUo2laFemn4VdLh/gmveg+WnFa3DyWD9jtD2bxGBrOjiabhJX3X7lRfrU5cJL8NbPI/Jna+QFQAAANKa1YCENWUZM5XP3ux3ZDFbRrKlh4eVfpK0k1TprnKXPlFZv5gZdj+zFbaGJhhqK45zqNXjTgvanL+C1bS1O4u+bFUdnbKobLw/l8Wytr4dNqU5ytrKpu9fMc97KdmcJsfCSSkkoxdTEYmdlKe6m3J8opXtFcPVtt+Zu3vaaW0cbUxLuovy0oP3KUb7i65uT9ZMDjwLyhZcSgEtkAACUgjTJAV8P1XzBG+/6SAFSYq4irmjduoBuxm2GyAAAAtCNz6sHjp0KkKtGTjUpSU4TXGMou669D5EyAPXfd72ypbTwqqxtGrC0a9LWE7cVzhLNp9VxTOUHjXsn2lr7PxEcRh5WkspQfsVI6wmtV+Ds0epOw3bbDbTo79F7tSKXi0JNb9N/wC6PKS+53SDkxVsNhID4NtbEoYuk6OJpRqweklmnzjJZxfqrM6b7Vdw0rueArprj4FfJr0jVis9Ek0urO9QB4/2v2F2jhnargqyS96EHUh+3TuvvOPTg02mmmuKas11R7hKVKUZcYp9UmB4mw1ByaUU5N+7FOT+SOSbJ7v9p4prw8HVUf1qq8KPW9S110uetYU0uCS6KxcDpTsn3EQi1PaFbf8A8ig2ofaqtKT6JLqzuHZmzaOHpxo0KUKdOPCEEopc3lxb1fFn0t2zZ0b3s97CkpYLZ87p3jWxUXk9HCi+Wjn8uYH53fh3hLESez8NK9GnJePUTuqtSLuoR5wi0s9ZLkk31LGyVwlZXfEzk7gJSuQAAJSINIySXqBbJGJLZAAAAAfTRwM5QlUSW7G925RWaV2km7t2u/g+TPmAAFooBCNyJKxpKVskZAAAAPq2ZtGrh6ka1CpKnUg7xnB2a9PVc08mfPuu1yoHffYnvwpzUaW0Y+HLh+U04t05es6azi/WN16I7e2dtGjXgqlCrCrB8J05Kcel1r6HiY+3ZW16+Gnv4etUpS505uN7aO3FejA9rA8zbI77dp0klUdGutXUp7srclKm4r4tM5Vhu/5/3mz+rhX/ANrp/wAQO7rknTEu/wDoWywNVvk6sEvnun5OO+kBXa/M4GlB6OpVnVXyiofiB36cf7UdtMFgI3xNeKla6ox81WXK0FmursvU847c71dqYm6eJdKL9yglS/fXn/eOGVJuTbbbbd227tt8W3qwOwu8HvWxO0N6jSvQwzunTT89Vf5s1p/hWWee9kdfQlYoAJk7kAAASkaPJAZAAAAAAAA/f2ZK2Dq55SlKLvLdXspxS86u+OSjK9s7H4ByHZL/ALJWVm5Pft5nFJKMHJ23vNpkk+Cu1dHHgLRjcvNpZIhz5GYAAADSFPUiELkTly4ATOeiKAAADSmtQEIavgVlImc7lAABKQBI0irZkJW/kUlK4BsgAASkErmuS+IEeyZthsgAATFXAmEbk1EtC0p8jIAAAP2dlU5vD1rKfh5Oo1Gnu+XOPmnne793mj8Y5Bsih/Z8TKyfltFtZ3jGW9Z8FK0urW96tcfAAAAWgioA0qTuZgAADSEOYGYAAAAAjVK3HiZEtgJSuQAABKRMo2AiLsGyAAAAFoxuXnO2SKqeVigAAAAAB+1sfCxlQxM3uOUYqycZOUeL3k8kr2fPhfgs/wAU/X2Zj6cMPXpy9qovInGO7fK/mzlf04ZLO5+QALwh8hBa6E1JgVla+RUAAAa046sCILmVnO4nO/QqAAAAvKFiySWZnKVwIAAAmKCRo0kudwGS6mbYbIAAFowuBFiDWUrZIyAAAAXjC4hC5MpaIC+4uZBiABMeIAG79n4HzgAAABanxRpP2f69QAMQAAL0uKAAiX8yoAAAAaUOL6CtxAAzAAA2o8H/AFoABiAAAAA+iHs/M+cAAAAP/9k=" class="img-fluid" alt="darkmoon" height="30" width="30"></span>
+                <span class="w3-bar-item w3-right medium"><a href="/login">Logout</a></span>
+            </div>
+
+            <!-- Sidebar/menu -->
+            <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;padding-top:40px;" id="mySidebar"><br>
+                <div class="w3-container w3-row">
+                <div class="w3-col s4">
+                    <img src="https://www.w3schools.com/w3images/avatar3.png" class="w3-circle w3-margin-right" style="width:46px">
+                </div>
+                <div class="w3-col s8 w3-bar">
+                    <span>Welcome, <strong>{{session["name"]}}</strong></span><br>
+                    <a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
+                    <a href="#" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
+                    <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
+                </div>
+                </div>
+                <hr>
+                <div class="w3-container">
+                <h5>Dashboard</h5>
+                </div>
+                <div class="w3-bar-block">
+                <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
+                <a href="/" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>  Homepage</a>
+                <a href="/index" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Overview</a>
+                <a href="/gradebook" class="w3-bar-item w3-button w3-padding"><i class="fa fa-diamond fa-fw"></i>  Gradebook</a>
+                <a href="/classes" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bullseye fa-fw"></i>  Classes</a>
+                <a href="/unfinished" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Settings</a><br><br>
+                </div>
+            </nav>
+          <!-- Overlay effect when opening sidebar on small screens -->
+          <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+        {% else %}
+        <nav class="bg-light border navbar navbar-expand-md navbar-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">
+                    <span><img src="/static/favicon.ico" class="img-fluid" alt="darkmoon" height="50" width="50"></span>
+                    <span>Dark Moon</span>
+                </a>
+                <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbar" data-bs-toggle="collapse" type="button">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbar">
+                        <ul class="navbar-nav ms-auto mt-2">
+                            <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
+                        </ul>
+                </div>
+            </div>
+        </nav>
+        {% endif %}
+
+        {% if get_flashed_messages() %}
+            <header>
+                <div class="alert alert-primary mb-0 text-center" role="alert">
+                    {{ get_flashed_messages() | join(" ") }}
+                </div>
+            </header>
+        {% endif %}
+
+        <main class="container-fluid py-5 text-center">
+            {% block main %}{% endblock %}
+        </main>
+
+        {% if session["user_id"] %}
+            <footer class="mb-5 small text-muted" style="margin-left:750px">
+                Copyright &#169; Kashyap Bathina
+            </footer>
+        {% else %}
+            <footer class="mb-5 small text-muted text-center">
+                Copyright &#169; Kashyap Bathina
+            </footer>
+        {% endif %}
+
+        {% block javascript %}{% endblock %}
+
+        <script>
+            var mySidebar = document.getElementById("mySidebar");
+
+            // Get the DIV with overlay effect
+            var overlayBg = document.getElementById("myOverlay");
+
+            // Toggle between showing and hiding the sidebar, and add overlay effect
+            function w3_open() {
+            if (mySidebar.style.display === 'block') {
+                mySidebar.style.display = 'none';
+                overlayBg.style.display = "none";
+            } else {
+                mySidebar.style.display = 'block';
+                overlayBg.style.display = "block";
+            }
+            }
+
+            // Close the sidebar with the close button
+            function w3_close() {
+            mySidebar.style.display = "none";
+            overlayBg.style.display = "none";
+            }
+        </script>
+
+    </body>
+
+</html>
