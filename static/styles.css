@@ -1,0 +1,137 @@
+nav .navbar-brand
+{
+    /* size for brand */
+    font-size: xx-large;
+}
+
+main .form-control
+{
+    /* Center form controls */
+    display: inline-block;
+
+    /* Override Bootstrap's 100% width for form controls */
+    width: auto;
+}
+
+main
+{
+    /* Scroll horizontally as needed */
+    overflow-x: auto;
+
+    /* Center contents */
+    text-align: center;
+}
+
+main img
+{
+    /* Constrain images on small screens */
+    max-width: 100%;
+}
+
+h1{
+    padding: 50px 0px;
+    color: green;
+}
+
+.center{
+    text-align: center;
+}
+
+.large{
+    font-size: large;
+}
+
+.medium{
+    font-size: medium;
+}
+
+.small{
+    font-size: small;
+}
+
+.lgreen{
+    color: #74c47c;
+}
+
+#container{
+    padding:10px 10px;
+}
+
+
+#submission{
+    padding:10px 10px
+}
+
+.hover-underline-animation {
+  position: relative;
+  color:#0087ca;
+  text-align: center;
+  display: block;
+  margin: auto;
+
+}
+
+.hover-underline-animation:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color:#0087ca;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.hover-underline-animation:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+    table {
+    width: 1050px;
+    border: none;
+    border-top: 1px solid #EEEEEE;
+    font-family: arial, sans-serif;
+    }
+
+    td,
+    th {
+    border-top: none;
+    text-align: left;
+    padding: 20px;
+    color: #363D41;
+    font-size: 14px;
+    }
+
+    tr {
+    border: none;
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: flex-start;
+    }
+
+
+    .expanded-row-content {
+    border-top: none;
+    grid-column: 1/-1;
+
+    color: #AEB1B3;
+    font-size: 13px;
+    background-color: #fff;
+    }
+
+    tr:first-child:hover {
+    cursor: default;
+    background-color: #fff;
+    }
+
+    tr:hover {
+    background-color: #EEF4FD;
+    }
+
+    .hide-row {
+    display: none;
+    }

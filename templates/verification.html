@@ -1,0 +1,129 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Verification
+{% endblock %}
+
+{% block main %}
+    <div id="container">
+        <h1 class="center">Hello, {{first}}</h1>
+
+        <h2 class="center lgreen">A Verification Code Has Been Sent To Your Email To Verify Your Identity</h2>
+        <form action="/verification" method="post">
+            <div style="padding: 20px 20px">
+                <div class="mb-3">
+                    <input class="form-control mx-auto w-auto" id="usercode" name="usercode" placeholder="Code" type="text">
+                </div>
+
+                <div class="mb-3">
+                    <button class="btn btn-primary" type="submit"">Submit</button>
+                </div>
+            </div>
+        </form>
+
+
+        <div id="submission">
+            <div class="medium lgreen" style="padding: 20px 20px">Below is your {{variety}} submission</div>
+            <a href="/register" class="medium lgreen" style="padding: 20px 20px">Click to resubmit form</a>
+            {% if variety=="teacher" %}
+
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Name:</td>
+                    <td>{{first}} {{last}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Email:</td>
+                    <td>{{email}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Password:</td>
+                    <td><div id="security">******</div> <input type="checkbox" onclick="myFunction()">Show Password</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">4</th>
+                    <td>Role:</td>
+                    <td>{{role}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">5</th>
+                    <td>School:</td>
+                    <td>{{school}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">6</th>
+                    <td>Organization:</td>
+                    <td>{{organization}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">7</th>
+                    <td>Number:</td>
+                    <td>{{number}}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+            {% else %}
+            <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Name:</td>
+                <td>{{first}} {{last}}</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Email:</td>
+                <td>{{email}}</td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>Password:</td>
+                <td><div id="security">******</div> <input type="checkbox" onclick="myFunction()">Show Password</td>
+              </tr>
+              <tr>
+                <th scope="row">4</th>
+                <td>Organization:</td>
+                <td>{{organization}}</td>
+              </tr>
+            </tbody>
+          </table>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascript %}
+<script>
+    function myFunction() {
+        var password = JSON.parse('{{ password | tojson }}')
+        var x = document.getElementById("security");
+        if (x.innerHTML === password) {
+            x.innerHTML = "******";
+        }
+        else {
+            x.innerHTML = password
+        }
+    }
+</script>
+{% endblock %}
+
