@@ -1,0 +1,250 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block main %}
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+    <!-- Header -->
+    <header class="w3-container" style="padding-top:22px; text-align: left;">
+      <h5><b><i class="fa fa-dashboard"></i> My Dashboard</b></h5>
+    </header>
+    {% if session["type"] == "teacher" %}
+      <div class="w3-row-padding w3-margin-bottom">
+        <div class="w3-quarter">
+          <a href="/" style="text-decoration: none;">
+          <div class="w3-container w3-red w3-padding-16">
+            <div class="w3-left"><i class="fa fa-bank w3-xxxlarge"></i></div>
+            <!--
+            <div class="w3-right">
+              <h3>52</h3>
+            </div>
+            -->
+            <div class="w3-clear"></div>
+            <h4>Homepage</h4>
+          </div>
+          </a>
+        </div>
+
+        <div class="w3-quarter">
+          <a href="/index" style="text-decoration: none;">
+          <div class="w3-container w3-orange w3-padding-16">
+            <div class="w3-left"><i class="fa fa-eye w3-xxxlarge"></i></div>
+            <!--
+            <div class="w3-right">
+              <h3>52</h3>
+            </div>
+            -->
+            <div class="w3-clear"></div>
+            <h4>Overview</h4>
+          </div>
+          </a>
+        </div>
+
+        <div class="w3-quarter">
+          <a href="/gradebook" style="text-decoration: none;">
+          <div class="w3-container w3-yellow w3-padding-16">
+            <div class="w3-left"><i class="fa fa-diamond w3-xxxlarge"></i></div>
+            <div class="w3-clear"></div>
+            <h4>Gradebook</h4>
+          </div>
+          </a>
+        </div>
+
+        <div class="w3-quarter">
+          <a href="/grading" style="text-decoration: none;">
+          <div class="w3-container w3-green w3-padding-16">
+            <div class="w3-left"><i class="fa fa-share-alt w3-xxxlarge"></i></div>
+            <div class="w3-clear"></div>
+            <h4>Grading</h4>
+          </div>
+          </a>
+        </div>
+
+        <div class="w3-quarter" style="padding-top:20px">
+          <a href="/classes" style="text-decoration: none;">
+          <div class="w3-container w3-blue w3-text-white w3-padding-16">
+            <div class="w3-left"><i class="fa fa-bullseye w3-xxxlarge"></i></div>
+            <div class="w3-clear"></div>
+            <h4>Classes</h4>
+          </div>
+          </a>
+        </div>
+
+        <div class="w3-quarter" style="padding-top:20px">
+          <a href="/students" style="text-decoration: none;">
+          <div class="w3-container w3-teal w3-text-white w3-padding-16">
+            <div class="w3-left"><i class="fa fa-users fa-fw w3-xxxlarge"></i></div>
+            <div class="w3-clear"></div>
+            <h4>Students</h4>
+          </div>
+          </a>
+        </div>
+
+        <div class="w3-quarter" style="padding-top:20px">
+          <a href="/unfinished" style="text-decoration: none;">
+          <div class="w3-container w3-purple w3-text-white w3-padding-16">
+            <div class="w3-left"><i class="fa fa-bell fa-fw w3-xxxlarge"></i></div>
+            <div class="w3-clear"></div>
+            <h4>Reporting</h4>
+          </div>
+          </a>
+        </div>
+
+        <div class="w3-quarter" style="padding-top:20px">
+          <a href="/unfinished" style="text-decoration: none;">
+          <div class="w3-container w3-text-white w3-padding-16" style="background-color:#d742f5">
+            <div class="w3-left"><i class="fa fa-cog fa-fw w3-xxxlarge"></i></div>
+            <div class="w3-clear"></div>
+            <h4>Settings</h4>
+          </div>
+          </a>
+        </div>
+      </div>
+    {% else %}
+            <div class="w3-row-padding w3-margin-bottom">
+        <div class="w3-quarter">
+          <a href="/" style="text-decoration: none;">
+          <div class="w3-container w3-red w3-padding-16">
+            <div class="w3-left"><i class="fa fa-bank w3-xxxlarge"></i></div>
+            <!--
+            <div class="w3-right">
+              <h3>52</h3>
+            </div>
+            -->
+            <div class="w3-clear"></div>
+            <h4>Homepage</h4>
+          </div>
+          </a>
+        </div>
+
+        <div class="w3-quarter">
+          <a href="/index" style="text-decoration: none;">
+          <div class="w3-container w3-orange w3-padding-16">
+            <div class="w3-left"><i class="fa fa-eye w3-xxxlarge"></i></div>
+            <!--
+            <div class="w3-right">
+              <h3>52</h3>
+            </div>
+            -->
+            <div class="w3-clear"></div>
+            <h4>Overview</h4>
+          </div>
+          </a>
+        </div>
+
+        <div class="w3-quarter">
+          <a href="/gradebook" style="text-decoration: none;">
+          <div class="w3-container w3-yellow w3-padding-16">
+            <div class="w3-left"><i class="fa fa-diamond w3-xxxlarge"></i></div>
+            <div class="w3-clear"></div>
+            <h4>Gradebook</h4>
+          </div>
+          </a>
+        </div>
+
+        <div class="w3-quarter">
+          <a href="/classes" style="text-decoration: none;">
+          <div class="w3-container w3-green w3-text-white w3-padding-16">
+            <div class="w3-left"><i class="fa fa-bullseye w3-xxxlarge"></i></div>
+            <div class="w3-clear"></div>
+            <h4>Classes</h4>
+          </div>
+          </a>
+        </div>
+
+        <div class="w3-quarter" style="padding-top:20px">
+          <a href="/unfinished" style="text-decoration: none;">
+          <div class="w3-container w3-blue w3-text-white w3-padding-16">
+            <div class="w3-left"><i class="fa fa-cog fa-fw w3-xxxlarge"></i></div>
+            <div class="w3-clear"></div>
+            <h4>Settings</h4>
+          </div>
+          </a>
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="w3-panel">
+      <div class="w3-row-padding" style="margin:0 -16px">
+        <div class="w3-twothird">
+          <h5>Feeds</h5>
+          <table class="w3-table w3-striped w3-white">
+            <tr>
+              <td><i class="fa fa-user w3-text-blue w3-large"></i></td>
+              <td>New record, over 90 views.</td>
+              <td><i>10 mins</i></td>
+            </tr>
+            <tr>
+              <td><i class="fa fa-bell w3-text-red w3-large"></i></td>
+              <td>Database error.</td>
+              <td><i>15 mins</i></td>
+            </tr>
+            <tr>
+              <td><i class="fa fa-users w3-text-yellow w3-large"></i></td>
+              <td>New record, over 40 users.</td>
+              <td><i>17 mins</i></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <hr>
+
+    <div class="w3-container">
+      <h5>General Stats</h5>
+      <p>New Visitors</p>
+      <div class="w3-grey">
+        <div class="w3-container w3-center w3-padding w3-green" style="width:25%">+25%</div>
+      </div>
+
+      <p>New Users</p>
+      <div class="w3-grey">
+        <div class="w3-container w3-center w3-padding w3-orange" style="width:50%">50%</div>
+      </div>
+    </div>
+    <hr>
+    {% if session["type"] == "teacher" %}
+    <div class="w3-container">
+      <h5>Students (A-Z)</h5>
+      <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
+        {% for student in students %}
+        <tr>
+          <td>{{student["studentname"]}}</td>
+          <td>{{student["classname"]}}</td>
+          <td>{{student["grade"]}}</td>
+        </tr>
+        {% endfor %}
+      </table><br>
+      <a href="/students"><button class="w3-button w3-dark-grey">All Students <i class="fa fa-arrow-right"></i></button></a>
+    </div>
+    {% endif %}
+
+    <hr>
+    <div class="w3-container w3-dark-grey w3-padding-32">
+      <div class="w3-row">
+        <div class="w3-container w3-third">
+          <h5 class="w3-bottombar w3-border-green">Demographic</h5>
+          <p>Language</p>
+          <p>Country</p>
+          <p>City</p>
+        </div>
+        <div class="w3-container w3-third">
+          <h5 class="w3-bottombar w3-border-red">System</h5>
+          <p>Browser</p>
+          <p>OS</p>
+          <p>More</p>
+        </div>
+        <div class="w3-container w3-third">
+          <h5 class="w3-bottombar w3-border-orange">Target</h5>
+          <p>Users</p>
+          <p>Active</p>
+          <p>Geo</p>
+          <p>Interests</p>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+

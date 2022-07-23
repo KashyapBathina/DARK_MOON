@@ -1,0 +1,137 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Gradebook
+{% endblock %}
+
+{% block main %}
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+    <!-- Header -->
+    <header class="w3-container" style="padding-top:22px; text-align: left;">
+      <h5><b><i class="fa fa-dashboard"></i> Gradebook </b></h5>
+    </header>
+
+    <!---->
+    {% if not students %}
+      <div class="accordion accordion-flush" id="accordionFlushExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="flush-headingOne">
+            <a class="accordion-button collapsed" href="/students"  data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne" style="text-decoration: none;">
+              <h4>You do not have any students, click to add one.</h4>
+            </a>
+          </h2>
+        </div>
+      </div>
+      {% else %}
+        <div class="w3-quarter" style="padding-top:20px"></div>
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingOne">
+                <a class="accordion-button collapsed" style="text-decoration: none;">
+                      <h4 style="padding-right:500px">View Grades</h4>
+                      <div>
+                        <form action="/gradebook" method="post" id="todo-form">
+                        <div class="mb-3" style="padding-top:50px">
+                            <label for="exampleFormControlInput1" class="form-label" style="padding-right:20px">Class Name</label>
+                            <select name="classesl" id="classesl" class="form-select form-control form-label" aria-label="Default select">
+                              <option name = "none" id="none" value ="none"> --select class--</option>
+                              {% for class in classes %}
+                              <option name = "cname" value=" {{class["classname"]}} "> {{class["classname"]}} </option>
+                              {% endfor %}
+                          </select>
+                        </div>
+                        <div class="mb-3" style="padding-top:20px">
+                            <button name="form" id="form" type="submit" class="btn btn-primary mb-3" style="margin-right:10px" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">Select Class</button>
+                        </div>
+                        </form>
+                    </div>
+                </a>
+              </h2>
+                <div class="card card-body">
+                        <div class="w3-panel">
+                            <div class="w3-row-padding" style="margin:0 -16px">
+                            {% if not selected %}
+                              <div class="mb-3">
+                                  <h3>You have no students in this class.</h3>
+                              </div>
+                            {% else %}
+
+
+
+
+                            <div class="w3">
+                              <table class="w3-striped w3-white">
+
+
+                                <tr>
+                                  <th>Student Name</th>
+                                  <th>Class</th>
+                                  <th><i>Grade</i></th>
+                                </tr>
+
+                                {% for student in selected %}
+                                <tr onClick='toggleRow(this)'>
+                                  <td><i class="fa fa-user w3-text-blue w3-large" style="padding-right:10px"></i>{{student["studentname"]}}</td>
+                                  <td>{{student["classname"]}}</td>
+                                  <td>{{student["grade"]}}</td>
+                                  <td class='expanded-row-content hide-row'>
+                                    <table>
+                                        <thead style="background-color: #bee6e5;">
+                                          <tr>
+                                              <th>Assignment Name</th>
+                                              <th>Weight</th>
+                                              <th><i>Assignment Grade</i></th>
+                                          </tr>
+                                        </thead>
+                                        {% for a in assignments %}
+                                        {% if a.studentname == student["studentname"] and a.classname == student["classname"] %}
+                                          <tr id="final" style="background-color: #D6EEEE;">
+                                            <td name="sname">{{a["assignmentname"]}}</td>
+                                            <td name="cclass">{{a["weight"]}}</td>
+                                            <th><i>{{a["grade"]}}</i></th>
+                                          </tr>
+                                        {% endif %}
+                                        {% endfor %}
+                                      </table>
+                                  </td>
+                                </tr>
+                                {% endfor %}
+
+
+                              </table>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+              </div>
+            </div>
+      {% endif %}
+    </div>
+    </div>
+<hr>
+{% endblock %}
+
+
+
+
+
+
+{% block javascript %}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(){
+      var classesl = JSON.parse('{{ classesl | tojson }}');
+      document.getElementById('classesl').value = classesl;
+  });
+
+  var acc = document.getElementsByClassName("accordion");
+  var i;
+
+  const toggleRow = (element) => {
+    element.getElementsByClassName('expanded-row-content')[0].classList.toggle('hide-row');
+    console.log(event);
+  }
+</script>
+
+{% endblock %}

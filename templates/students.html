@@ -1,0 +1,145 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Students
+{% endblock %}
+
+{% block main %}
+{% if session["type"] == "teacher" %}
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+    <!-- Header -->
+    <header class="w3-container" style="padding-top:22px; text-align: left;">
+      <h5><b><i class="fa fa-dashboard"></i> Students </b></h5>
+    </header>
+
+    <div class="w3-row-padding w3-margin-bottom">
+
+
+    {% if not students %}
+      <div class="accordion accordion-flush" id="accordionFlushExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="flush-headingOne">
+            <a class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne" style="text-decoration: none;">
+                  <h4>You do not have any students, click to add one.</h4>
+            </a>
+          </h2>
+          <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+            <div class="card card-body">
+                <form action="/students" method="post">
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Student Email</label>
+                        <input name="semail" type="email" class="form-control" id="exampleFormControlInput1" placeholder="student email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Student Name</label>
+                        <input name="sname" type="text" class="form-control" id="exampleFormControlInput1" placeholder="student name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Class Name</label>
+                        <select name="classesl" id="classesl" class="form-select form-control form-label" aria-label="Default select">
+                            <option name = "none" id="none" value ="none"> --select class--</option>
+                            {% for class in classes %}
+                            <option name = "cname" value=" {{class["classname"]}} "> {{class["classname"]}} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary mb-3" style="margin-right:10px">Add Student</button>
+                    </div>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% else %}
+
+        <div class="w3-panel">
+            <div style="margin:0 -16px">
+              <div class="w3">
+                <h5>All Students</h5>
+                <table class="w3-striped w3-white w3-white">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Class</th>
+                      <th>Grade</th>
+                    </tr>
+                  </th>
+                {% for student in students %}
+                  <tr>
+                    <td><i class="fa fa-user w3-text-blue w3-large" style="padding-right:20px"></i>{{student["studentname"]}}</td>
+                    <td>{{student["classname"]}}</td>
+                    <td>{{student["grade"]}}</td>
+                  </tr>
+                {% endfor %}
+                </table>
+              </div>
+            </div>
+          </div>
+          <hr>
+
+        <div class="w3-quarter" style="padding-top:20px"></div>
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingOne">
+                <a class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne" style="text-decoration: none;">
+                      <h4>Click to add more students</h4>
+                </a>
+              </h2>
+              <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                <div class="card card-body">
+                    <form action="/students" method="post">
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Student Name</label>
+                            <input name="sname" type="text" class="form-control" id="exampleFormControlInput1" placeholder="student email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Student Email</label>
+                            <input name="semail" type="email" class="form-control" id="exampleFormControlInput1" placeholder="student email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Class Name</label>
+                            <select name="classesl" id="classesl" class="form-select form-control form-label" aria-label="Default select">
+                                <option name = "none" id="none" value ="none"> --select class--</option>
+                                {% for class in classes %}
+                                <option name = "cname" value=" {{class["classname"]}} "> {{class["classname"]}} </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary mb-3" style="margin-right:10px">Add Student</button>
+                        </div>
+                    </form>
+                </div>
+              </div>
+            </div>
+          </div>
+      {% endif %}
+
+
+
+
+    </div>
+
+    <hr>
+
+    <div class="w3-panel">
+      <div class="w3-row-padding" style="margin:0 -16px">
+        <div class="w3-twothird">
+          <h5 style="text-align:left">Emails</h5>
+          <table class="w3-table w3-striped w3-white" style="width:800px">
+            {% for student in students %}
+            <tr>
+              <td><i class="fa fa-user w3-text-blue w3-large"></i></td>
+              <td>{{student["studentname"]}}</td>
+              <td><i>{{student["studentemail"]}}</i></td>
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
+    </div>
+    <hr>
+{% endif %}
+{% endblock %}

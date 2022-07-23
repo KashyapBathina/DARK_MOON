@@ -1,0 +1,81 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    <form action="/register" method="post">
+        <div>Account Type</div>
+        <div class="mb-3">
+            <select name="type" id="type" class="form-select form-control" aria-label="Default select" onchange="myFunction()">
+                <option name = "none" id="none" value ="none"> --select--</option>
+                <option name = "student" id="student" value="student"> Student </option>
+                <option name = "teacher" id="teacher" value="teacher"> Teacher </option>
+                <option name = "gaurdian" id="gaurdian" value="gaurdian"> Gaurdian/Evaluator </option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="email" name="email" placeholder="Email" type="text">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="first" name="first" placeholder="First Name" type="text">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="last" name="last" placeholder="Last Name" type="text">
+        </div>
+        <div class="mb-3">
+            <input class="blocked form-control mx-auto w-auto" id="school" name="school" placeholder="School/Workplace" type="text" style="display:none">
+        </div>
+        <div class="mb-3">
+            <input class="blocked form-control mx-auto w-auto" id="role" name="role" placeholder="Job Title/Role" type="text" style="display:none">
+        </div>
+        <div class="mb-3">
+            <select name="organization" name="organization" id="organization" class="form-select form-control" aria-label="Default select">
+                <option name="none" id="none" value="none"> --select--</option>
+                <option name="corporate" id="corporate" value="corporate"> Corporate Education </option>
+                <option name="further" id="further" value="further"> Further Education </option>
+                <option name="government" id="government" value="government"> Government </option>
+                <option name="higher" id="higher" value="higher"> Higher Ed </option>
+                <option name="k12" id="k12" value="K12"> K12 </option>
+                <option name="training" id="training" value="training"> RTO/Training </option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <input class="blocked form-control mx-auto w-auto" id="number" name="number" placeholder="Number (000-000-0000)" type="text" style="display:none">
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" id="confirmation" name="confirmation" placeholder="Confirm Password" type="password">
+        </div>
+        <button class="btn btn-primary" type="submit" >Register</button>
+    </form>
+{% endblock %}
+
+
+
+
+
+{% block javascript %}
+    <script>
+        function myFunction() {
+            var x = document.getElementById("type").value;
+            let elementsList = document.querySelectorAll(".blocked")
+            const elementsArray = [...elementsList];
+
+            if(x==="none" || x==='student' || x==="gaurdian"){
+                elementsArray.forEach(element => {
+                        element.style.display = "none";
+                    });
+            }
+            if(x==='teacher'){
+                elementsArray.forEach(element => {
+                        element.style.display = "block";
+                    });
+            }
+        }
+    </script>
+{% endblock %}
+

@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+    <form action="/login" method="post">
+        <div class="mb-3">
+            <select name="type" class="form-select form-control" aria-label="Default select">
+                <option value="teacher"> Teacher </option>
+                <option value="student"> Student </option>
+                <option value="parent"> Gaurdian/Evaluator </option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="email" name="email" placeholder="Email" type="text">
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
+        </div>
+        <a name="forgot" href="https://www.google.com/?safe=active&ssui=on">Forgot Password</a>
+        <button class="btn btn-primary" type="submit">Log In</button>
+    </form>
+{% endblock %}

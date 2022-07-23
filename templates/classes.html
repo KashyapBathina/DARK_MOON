@@ -1,0 +1,125 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Classes
+{% endblock %}
+
+{% block main %}
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+    <!-- Header -->
+    <header class="w3-container" style="padding-top:22px; text-align: left;">
+      <h5><b><i class="fa fa-dashboard"></i> Classes </b></h5>
+    </header>
+
+    <div class="w3-row-padding w3-margin-bottom">
+
+{% if session["type"] == "teacher" %}
+    {% if not classes %}
+      <div class="accordion accordion-flush" id="accordionFlushExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="flush-headingOne">
+            <a class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne" style="text-decoration: none;">
+                  <h4>You do not have any classes, click to add one.</h4>
+            </a>
+          </h2>
+          <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+            <div class="card card-body">
+                <form action="/classes" method="post">
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Class Name</label>
+                        <input name="cname" type="text" class="form-control" id="exampleFormControlInput1" placeholder="class name">
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary mb-3" style="margin-right:10px">Make New Class</button>
+                    </div>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% else %}
+        {% for class in classes %}
+        <div class="w3-quarter" style="padding-top:20px;width:500px">
+            <a href="/students" style="text-decoration: none;">
+            <div class="w3-container w3-teal w3-text-white w3-padding-16">
+            <div class="w3-left"><i class="fa fa-users w3-xlarge"></i></div>
+            <div class="w3-clear"></div>
+                <h4>{{class["classname"]}}</h4>
+            </div>
+            </a>
+        </div>
+        {% endfor %}
+
+        <div class="w3-quarter" style="padding-top:20px"></div>
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingOne">
+                <a class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne" style="text-decoration: none;">
+                      <h4>Click to add more classes</h4>
+                </a>
+              </h2>
+              <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                <div class="card card-body">
+                    <form action="/classes" method="post">
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Class Name</label>
+                            <input name="cname" type="text" class="form-control" id="exampleFormControlInput1" placeholder="class name">
+                        </div>
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary mb-3" style="margin-right:10px">Make New Class</button>
+                        </div>
+                    </form>
+                </div>
+              </div>
+            </div>
+          </div>
+      {% endif %}
+
+
+
+
+    </div>
+
+    <hr>
+    <div class="w3-container">
+      <h5>General Stats</h5>
+      <p>New Visitors</p>
+      <div class="w3-grey">
+        <div class="w3-container w3-center w3-padding w3-green" style="width:25%">+25%</div>
+      </div>
+
+      <p>New Users</p>
+      <div class="w3-grey">
+        <div class="w3-container w3-center w3-padding w3-orange" style="width:50%">50%</div>
+      </div>
+    </div>
+    <hr>
+{% else %}
+  {% for class in classes %}
+  <div class="w3-quarter" style="padding-top:20px;width:500px;padding-left:20px">
+      <a href="/gradebook" style="text-decoration: none">
+      <div class="w3-container w3-green w3-text-white w3-padding-16">
+      <div class="w3-left"><i class="fa fa-users w3-xlarge"></i></div>
+      <div class="w3-clear"></div>
+          <h4 style="text-align:right">{{class["classname"]}}</h4>
+          <h4 style="text-align:right;">Teacher: {{class["teachername"]}}</h4>
+      </div>
+      </a>
+  </div>
+  {% endfor %}
+  <div class="w3-container">
+    <h5>General Stats</h5>
+    <p>New Visitors</p>
+    <div class="w3-grey">
+      <div class="w3-container w3-center w3-padding w3-green" style="width:25%">+25%</div>
+    </div>
+
+    <p>New Users</p>
+    <div class="w3-grey">
+      <div class="w3-container w3-center w3-padding w3-orange" style="width:50%">50%</div>
+    </div>
+  </div>
+  <hr>
+{% endif %}
+{% endblock %}

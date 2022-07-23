@@ -1,0 +1,119 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Grading
+{% endblock %}
+
+{% block main %}
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+    <!-- Header -->
+    <header class="w3-container" style="padding-top:22px; text-align: left;">
+      <h5><b><i class="fa fa-dashboard"></i> Grading </b></h5>
+    </header>
+
+    <!---->
+    {% if not students %}
+      <div class="accordion accordion-flush" id="accordionFlushExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="flush-headingOne">
+            <a class="accordion-button collapsed" href="/students"  data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne" style="text-decoration: none;">
+                <h4>You do not have any students, click to add one.</h4>
+            </a>
+          </h2>
+        </div>
+      </div>
+      {% else %}
+        <div class="w3-quarter" style="padding-top:20px"></div>
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingOne">
+                <a class="accordion-button collapsed" style="text-decoration: none;">
+                      <h4 style="padding-right:500px">New Assignment</h4>
+                      <div>
+                        <form action="/grading" method="post" id="todo-form">
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Assignment Name</label>
+                            <input name="aname" id="aname" type="text" class="form-control" id="exampleFormControlInput1" placeholder="assignment name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Class Name</label>
+                            <select name="classesl" id="classesl" class="form-select form-control form-label" aria-label="Default select">
+                              <option name = "none" id="none" value ="none"> --select class--</option>
+                              {% for class in classes %}
+                              <option name = "cname" id="cname" value=" {{class["classname"]}} "> {{class["classname"]}} </option>
+                              {% endfor %}
+                          </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Weight</label>
+                            <input name="weight" id="weight" type="number" class="form-control" id="exampleFormControlInput1" placeholder="weight">
+                        </div>
+                        <div class="mb-3">
+                            <button name="form" id="form" type="submit" class="btn btn-primary mb-3" style="margin-right:10px" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">Add Assignment</button>
+                        </div>
+                        </form>
+                    </div>
+                </a>
+              </h2>
+                <div class="card card-body">
+                        <div class="w3-panel">
+                            <div class="w3-row-padding" style="margin:0 -16px">
+                            {% if not selected %}
+                                <div class="mb-3">
+                                    <h3>You have no students in this class.</h3>
+                                </div>
+                            {% else %}
+                            <form action="/fgrading" method="post">
+                              <div class="w3">
+                                  <table class="w3-table w3-striped w3-white">
+                                    <thead>
+                                      <tr>
+                                          <th>Name</th>
+                                          <th>Class</th>
+                                          <th>Grade</th>
+                                      </tr>
+                                    </thead>
+                                    {% for student in selected %}
+                                      <tr id="final" style="height:70px">
+                                        <td name="sname"><i class="fa fa-user w3-text-blue w3-large"></i> {{student["studentname"]}}</td>
+                                        <td name="cclass">{{student["classname"]}}</td>
+                                        <td><i><input name="grade" type="number" placeholder="%" style="width:50px; position:absolute;"></i></td>
+                                        <input name="aname" type="hidden" value="{{aname}}">
+                                        <input name="weight" type="hidden" value="{{weight}}">
+                                        <input name="classname" type="hidden" value="{{ student.classname }}">
+                                        <input name="studentname" type="hidden" value="{{ student["studentname"] }}">
+                                      </tr>
+                                    {% endfor %}
+                                  </table>
+                                <div class="mb-3">
+                                <button name="done" type="submit" class="btn btn-primary mb-3" style="margin-top:10px">Submit</button>
+                                </div>
+                            </form>
+                            {% endif %}
+                        </div>
+                      </div>
+                    </div>
+              </div>
+            </div>
+      {% endif %}
+    </div>
+    </div>
+<hr>
+{% endblock %}
+
+{% block javascript %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+        var classesl = JSON.parse('{{ classesl | tojson }}');
+        var aname = JSON.parse('{{ aname | tojson }}');
+        var weight = JSON.parse('{{ weight | tojson }}');
+
+        document.getElementById('classesl').value = classesl;
+        document.getElementById('aname').value = aname;
+        document.getElementById('weight').value = weight;
+    });
+</script>
+
+{% endblock %}
